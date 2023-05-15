@@ -2,9 +2,9 @@
 
 /* SHELL ---------------------------------------- */
 html {
-  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-    'Segoe UI Symbol', 'Noto Color Emoji';
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 }
 
 body {
@@ -108,7 +108,7 @@ ul {
 }
 
 /* BUTTONS -------------------------------------- */
-a.button,
+/* a.button,
 button {
   background: var(--qwik-light-blue);
   border: none;
@@ -136,7 +136,7 @@ button.button-small {
     font-size: 1rem;
     padding: 23px 35px;
   }
-}
+} */
 
 /* DESIGN --------------------------------------- */
 .ellipsis {

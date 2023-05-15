@@ -1,10 +1,10 @@
-import { component$, Slot, useStyles$ } from "@builder.io/qwik";
-import { routeLoader$ } from "@builder.io/qwik-city";
+import { component$, Slot, useStyles$ } from '@builder.io/qwik';
+import { routeLoader$ } from '@builder.io/qwik-city';
 
-import Navbar from "~/components/shared/navbar/navbar";
-import Footer from "~/components/shared/footer/footer";
+import Navbar from '~/components/shared/navbar/navbar';
+import Footer from '~/components/shared/footer/footer';
 
-import styles from "./styles.css?inline";
+import styles from './styles.css?inline';
 
 export const useServerTimeLoader = routeLoader$(() => {
   return {
