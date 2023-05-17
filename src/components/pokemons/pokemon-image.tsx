@@ -13,7 +13,7 @@ type Props = {
 };
 
 export const PokemonImage = component$(
-  ({ id, size = 250, isBack = false, isVisible = false }: Props) => {
+  ({ id, size = 250, isBack = false, isVisible = true }: Props) => {
     const imageLoaded = useSignal<boolean>(false);
 
     useTask$(({ track }) => {
@@ -41,7 +41,7 @@ export const PokemonImage = component$(
           onLoad$={() => (imageLoaded.value = true)}
           class={{
             hidden: !imageLoaded.value,
-            'brightness-0': isVisible,
+            'brightness-0': !isVisible,
           }}
         />
       </div>

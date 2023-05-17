@@ -1,6 +1,13 @@
-import { component$, Slot, useStyles$ } from '@builder.io/qwik';
+import {
+  component$,
+  Slot,
+  useContextProvider,
+  useStore,
+  useStyles$,
+} from '@builder.io/qwik';
 import { routeLoader$ } from '@builder.io/qwik-city';
 
+import { type PokemonGameState, PokemonGameContext } from '~/context';
 import Navbar from '~/components/shared/navbar/navbar';
 import Footer from '~/components/shared/footer/footer';
 
@@ -14,6 +21,12 @@ export const useServerTimeLoader = routeLoader$(() => {
 
 export default component$(() => {
   useStyles$(styles);
+  const pokemonGame = useStore<PokemonGameState>({
+    isPokemonVisible: true,
+    pokemonId: 4,
+    showBackImage: false,
+  });
+  useContextProvider(PokemonGameContext, pokemonGame);
   return (
     <>
       <Navbar />
