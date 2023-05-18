@@ -1,19 +1,11 @@
-import {
-  component$,
-  Slot,
-  useContextProvider,
-  useStore,
-  useStyles$,
-} from '@builder.io/qwik';
+import { component$, Slot, useStyles$ } from '@builder.io/qwik';
 import { routeLoader$ } from '@builder.io/qwik-city';
 
-import { PokemonGameContext, PokemonListContext } from '~/context';
-import type { PokemonGameState, PokemonListState } from '~/context';
 import Navbar from '~/components/shared/navbar/navbar';
 import Footer from '~/components/shared/footer/footer';
 
 import styles from './styles.css?inline';
-// import { PokemonListContext } from '~/context/pokemon/pokemon-list.context';
+import { PokemonProvider } from '~/context';
 
 export const useServerTimeLoader = routeLoader$(() => {
   return {
@@ -24,28 +16,29 @@ export const useServerTimeLoader = routeLoader$(() => {
 export default component$(() => {
   useStyles$(styles);
 
-  // Context //
-  const pokemonGame = useStore<PokemonGameState>({
-    isPokemonVisible: true,
-    pokemonId: 4,
-    showBackImage: false,
-  });
-  const pokemonList = useStore<PokemonListState>({
-    currentPage: 0,
-    isLoading: false,
-    pokemons: [],
-  });
-  useContextProvider(PokemonGameContext, pokemonGame);
-  useContextProvider(PokemonListContext, pokemonList);
-  // END Context
+  //* Se cambio por un PokemonProvider para sacar la logica del layout
+  // // Context //
+  // const pokemonGame = useStore<PokemonGameState>({
+  //   isPokemonVisible: true,
+  //   pokemonId: 4,
+  //   showBackImage: false,
+  // });
+  // const pokemonList = useStore<PokemonListState>({
+  //   currentPage: 0,
+  //   isLoading: false,
+  //   pokemons: [],
+  // });
+  // useContextProvider(PokemonGameContext, pokemonGame);
+  // useContextProvider(PokemonListContext, pokemonList);
+  // // END Context
 
   return (
-    <>
+    <PokemonProvider>
       <Navbar />
       <main class="flex flex-col items-center justify-center">
         <Slot />
       </main>
       <Footer />
-    </>
+    </PokemonProvider>
   );
 });
