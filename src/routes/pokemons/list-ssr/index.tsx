@@ -1,12 +1,22 @@
-import { component$, useComputed$ } from '@builder.io/qwik';
+import {
+  $,
+  component$,
+  useComputed$,
+  useSignal,
+  useStore,
+} from '@builder.io/qwik';
 import {
   type DocumentHead,
   Link,
   routeLoader$,
   useLocation,
 } from '@builder.io/qwik-city';
+
 import { PokemonImage } from '~/components/pokemons/pokemon-image';
+import { Modal } from '~/components/shared/modal/modal';
+
 import { getSmallPokemons } from '~/helpers/get-small-pokemons';
+
 import type { SmallPokemon } from '~/types';
 
 export const usePokemonList = routeLoader$<SmallPokemon[]>(
@@ -23,13 +33,28 @@ export const usePokemonList = routeLoader$<SmallPokemon[]>(
 export default component$(() => {
   const location = useLocation();
   const pokemons = usePokemonList();
-  // console.log(pokemons);
+
+  const isModalOpen = useSignal<boolean>(false);
+
+  const modalInfoPokemon = useStore({
+    id: '',
+    name: '',
+  });
 
   const currentOffset = useComputed$<number>(() => {
     const offsetString = new URLSearchParams(location.url.search);
     const offsetNumber = Number(offsetString.get('offset'));
-
     return offsetNumber;
+  });
+
+  const showModal = $((id: string, name: string) => {
+    modalInfoPokemon.id = id;
+    modalInfoPokemon.name = name;
+    isModalOpen.value = true;
+  });
+
+  const closeModal = $(() => {
+    isModalOpen.value = false;
   });
 
   return (
@@ -55,16 +80,29 @@ export default component$(() => {
       </div>
 
       <div class="grid grid-cols-1 mt-10 gap-4 sm:grid-cols-2 md:grid-cols-5">
-        {pokemons.value.map(pokemon => (
+        {pokemons.value.map(({ name, id }) => (
           <div
+            key={name}
+            onClick$={() => showModal(id, name)}
             class="text-center capitalize"
-            key={pokemon.name}
           >
-            <PokemonImage id={Number(pokemon.id)} />
-            {pokemon.name}
+            <PokemonImage id={Number(id)} />
+            {name}
           </div>
         ))}
       </div>
+
+      <Modal
+        isModalOpen={isModalOpen.value}
+        closeModalFn={closeModal}
+        size="sm"
+      >
+        <div q:slot="title">{modalInfoPokemon.name}</div>
+        <div q:slot="content">
+          <PokemonImage id={Number(modalInfoPokemon.id)} />
+          <span class="text-lg">Preguntandole a chatGPT</span>
+        </div>
+      </Modal>
     </>
   );
 });
