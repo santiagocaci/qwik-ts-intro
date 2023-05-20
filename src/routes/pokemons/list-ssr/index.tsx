@@ -4,7 +4,7 @@ import {
   useComputed$,
   useSignal,
   useStore,
-  useVisibleTask$,
+  // useVisibleTask$,
 } from '@builder.io/qwik';
 import {
   type DocumentHead,
@@ -53,21 +53,30 @@ export default component$(() => {
     modalInfoPokemon.id = id;
     modalInfoPokemon.name = name;
     isModalOpen.value = true;
+
+    //! Esto funciona si quitas useVisibleTask
+    getFunFactAboutPokemon(modalInfoPokemon.name).then(
+      resp => (pokemonFact.value = resp)
+    );
   });
 
   const closeModal = $(() => {
     isModalOpen.value = false;
+
+    //! Esto funciona si quitas useVisibleTask
+    pokemonFact.value = '';
   });
 
-  useVisibleTask$(({ track }) => {
-    track(() => modalInfoPokemon.name);
-    pokemonFact.value = '';
-    if (modalInfoPokemon.name.length > 0) {
-      getFunFactAboutPokemon(modalInfoPokemon.name).then(
-        resp => (pokemonFact.value = resp)
-      );
-    }
-  });
+  //* Otra manera de hacerlo con useVisibleTask
+  // useVisibleTask$(({ track }) => {
+  //   track(() => modalInfoPokemon.name);
+  //   pokemonFact.value = '';
+  //   if (modalInfoPokemon.name.length > 0) {
+  //     getFunFactAboutPokemon(modalInfoPokemon.name).then(
+  //       resp => (pokemonFact.value = resp)
+  //     );
+  //   }
+  // });
 
   return (
     <>
