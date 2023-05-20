@@ -8,6 +8,15 @@
 
 ---
 
+## Environment
+
+1. Rename `.env.example` to `.env`
+2. Get Api key from [OpenAi](https://platform.openai.com/account/api-keys)
+
+```bash
+PUBLIC_OPEN_AI_API_KEY =
+```
+
 ## Project Structure
 
 This project is using Qwik with [QwikCity](https://qwik.builder.io/qwikcity/overview/). QwikCity is just an extra set of tools on top of Qwik to make it easier to build a full site, including directory-based routing, layouts, and more.

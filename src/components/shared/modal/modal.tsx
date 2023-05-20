@@ -26,12 +26,12 @@ export const Modal = component$(
           onClick$={e => e.stopPropagation()}
           class={[`modal-content modal-${size}`]}
         >
-          <div class="mt-3 text-center">
+          <div class="mt-3 flex flex-col justify-center items-center">
             <h3 class="modal-title">
               <Slot name="title" />
             </h3>
 
-            <div class="mt-2 px-7 py-3">
+            <div class="mt-2 px-7 py-3 ">
               <div class="modal-content-text">
                 <Slot name="content" />
               </div>

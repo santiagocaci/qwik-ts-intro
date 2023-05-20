@@ -4,6 +4,7 @@ import {
   useComputed$,
   useSignal,
   useStore,
+  useVisibleTask$,
 } from '@builder.io/qwik';
 import {
   type DocumentHead,
@@ -14,6 +15,7 @@ import {
 
 import { PokemonImage } from '~/components/pokemons/pokemon-image';
 import { Modal } from '~/components/shared/modal/modal';
+import { getFunFactAboutPokemon } from '~/helpers/get-chat-gpt-response';
 
 import { getSmallPokemons } from '~/helpers/get-small-pokemons';
 
@@ -35,7 +37,7 @@ export default component$(() => {
   const pokemons = usePokemonList();
 
   const isModalOpen = useSignal<boolean>(false);
-
+  const pokemonFact = useSignal<string>('');
   const modalInfoPokemon = useStore({
     id: '',
     name: '',
@@ -55,6 +57,16 @@ export default component$(() => {
 
   const closeModal = $(() => {
     isModalOpen.value = false;
+  });
+
+  useVisibleTask$(({ track }) => {
+    track(() => modalInfoPokemon.name);
+    pokemonFact.value = '';
+    if (modalInfoPokemon.name.length > 0) {
+      getFunFactAboutPokemon(modalInfoPokemon.name).then(
+        resp => (pokemonFact.value = resp)
+      );
+    }
   });
 
   return (
@@ -95,12 +107,19 @@ export default component$(() => {
       <Modal
         isModalOpen={isModalOpen.value}
         closeModalFn={closeModal}
-        size="sm"
+        size="md"
       >
         <div q:slot="title">{modalInfoPokemon.name}</div>
-        <div q:slot="content">
+        <div
+          q:slot="content"
+          class="flex flex-col justify-center items-center"
+        >
           <PokemonImage id={Number(modalInfoPokemon.id)} />
-          <span class="text-lg">Preguntandole a chatGPT</span>
+          <span class="text-lg">
+            {pokemonFact.value === ''
+              ? 'Preguntando a OpenAi'
+              : pokemonFact.value}
+          </span>
         </div>
       </Modal>
     </>
