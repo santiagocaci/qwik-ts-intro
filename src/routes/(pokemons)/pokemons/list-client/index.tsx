@@ -88,7 +88,7 @@ export default component$(() => {
         </button> */}
       </div>
 
-      <div class="grid grid-cols-1 mt-10 gap-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+      <div class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
         {pokemonListContext.pokemons.map(pokemon => (
           <div
             class="text-center capitalize"

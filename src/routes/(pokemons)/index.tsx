@@ -33,7 +33,7 @@ export default component$(() => {
         />
       </div>
 
-      <div class="grid grid-cols-2 gap-4 mt-4">
+      <div class="mt-4 grid grid-cols-2 gap-4">
         <button
           disabled={pokemonId.value <= 1}
           onClick$={() => prevPokemon()}

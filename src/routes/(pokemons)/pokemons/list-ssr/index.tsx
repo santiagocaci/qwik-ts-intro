@@ -100,7 +100,7 @@ export default component$(() => {
         </Link>
       </div>
 
-      <div class="grid grid-cols-1 mt-10 gap-4 sm:grid-cols-2 md:grid-cols-5">
+      <div class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-5">
         {pokemons.value.map(({ name, id }) => (
           <div
             key={name}
@@ -121,7 +121,7 @@ export default component$(() => {
         <div q:slot="title">{modalInfoPokemon.name}</div>
         <div
           q:slot="content"
-          class="flex flex-col justify-center items-center"
+          class="flex flex-col items-center justify-center"
         >
           <PokemonImage id={Number(modalInfoPokemon.id)} />
           <span class="text-lg">
