@@ -1,0 +1,23 @@
+input {
+  @apply mb-3 h-10 w-full border-b-2 border-gray-300 text-gray-600 placeholder-gray-200 transition-all focus:border-purple-400 focus:placeholder-transparent focus:outline-none;
+}
+
+label {
+  @apply absolute -top-3.5 left-0 text-sm text-gray-600 transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-gray-400 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-gray-600;
+}
+
+button {
+  @apply w-full rounded-md bg-purple-500 px-2 py-1 text-white transition-all hover:bg-purple-700;
+}
+
+code {
+  @apply block w-80 overflow-scroll whitespace-pre text-sm;
+}
+
+.login-form {
+  @apply space-y-4 py-8 text-base leading-6 text-gray-700 sm:text-lg sm:leading-7;
+}
+
+.not-valid {
+  @apply border-red-500 text-red-400;
+}
