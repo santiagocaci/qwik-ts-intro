@@ -1,65 +1,36 @@
-import {
-  $,
-  component$,
-  useComputed$,
-  useStore,
-  useStylesScoped$,
-} from '@builder.io/qwik';
+import { component$, useStylesScoped$ } from '@builder.io/qwik';
+import { Form, routeAction$ } from '@builder.io/qwik-city';
 
 import styles from './login.css?inline';
+
+export const useLoginUserAction = routeAction$((data, { cookie }) => {
+  cookie.set('jwt', 'estoesmijwt', { secure: true, path: '/' });
+  const { email, password } = data;
+
+  return { success: false, email, password };
+});
 
 export default component$(() => {
   useStylesScoped$(styles);
 
-  const formState = useStore({ email: '', password: '', formPosted: false });
-  const emailError = useComputed$(() => {
-    if (!formState.formPosted || formState.email.includes('@')) return;
-    return 'not-valid';
-  });
-  const passwordError = useComputed$(() => {
-    if (!formState.formPosted || formState.password.length > 6) return;
-    return 'not-valid';
-  });
-  const onSubmit = $(() => {
-    formState.formPosted = true;
-  });
-  const isFormValid = useComputed$(() => {
-    if (
-      emailError.value === 'not-valid' ||
-      passwordError.value === 'not-valid'
-    ) {
-      return false;
-    }
-    return true;
-  });
+  const action = useLoginUserAction();
 
   return (
-    <form
-      class="login-form"
-      preventdefault:submit
-      onSubmit$={onSubmit}
+    <Form
+      action={action}
+      class="space-y-4 py-8 text-base  leading-6 text-gray-700 sm:text-lg sm:leading-7"
     >
       <div class="relative">
         <input
-          value={formState.email}
-          onInput$={event => {
-            formState.email = (event.target as HTMLInputElement).value;
-          }}
           name="email"
           id="email"
           type="text"
           placeholder="Email address"
-          class={emailError}
         />
         <label for="email">Email Address</label>
       </div>
       <div class="relative">
         <input
-          value={formState.password}
-          onInput$={event => {
-            formState.password = (event.target as HTMLInputElement).value;
-          }}
-          class={passwordError}
           id="password"
           name="password"
           type="password"
@@ -68,15 +39,12 @@ export default component$(() => {
         <label for="password">Password</label>
       </div>
       <div class="relative">
-        <button
-          disabled={!isFormValid.value}
-          type="submit"
-        >
-          Ingresar
-        </button>
+        <button type="submit">Ingresar</button>
       </div>
 
-      <code>{JSON.stringify(formState, undefined, 2)}</code>
-    </form>
+      <code class="overflow-auto">
+        {JSON.stringify(action.value, undefined, 2)}
+      </code>
+    </Form>
   );
 });
